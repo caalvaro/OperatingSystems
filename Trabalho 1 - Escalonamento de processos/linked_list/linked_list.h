@@ -6,15 +6,19 @@
 
 typedef struct _LIST_NODE LIST_NODE;
 typedef struct _LIST_HEAD LIST_HEAD;
+typedef struct _IO IO;
+typedef struct _Processo Processo;
 
-typedef struct _IO
+struct _IO
 {
     char tipo;
+    Processo *processo;
     int tempo_entrada;
     int tempo_execucao;
-} IO;
+    int tempo_saida;
+};
 
-typedef struct _Processo
+struct _Processo
 {
     int pid;
     int ppid;
@@ -23,13 +27,12 @@ typedef struct _Processo
     int tempo_executado;
     int tempo_ciclo_atual;
     int status;
-    int quantidade_io;
-    IO array_io[];
-} Processo;
+    LIST_HEAD *lista_io;
+};
 
 struct _LIST_NODE
 {
-    Processo *processo;
+    void *elemento;
     LIST_NODE *previous_node;
     LIST_NODE *next_node;
 };
@@ -41,10 +44,11 @@ struct _LIST_HEAD
     LIST_NODE *last_node;
 };
 
-LIST_NODE *create_node(Processo *processo);
+LIST_NODE *create_node(void *elemento);
 LIST_HEAD *create_head();
 void append_node(LIST_HEAD *list_head, LIST_NODE *node);
 void remove_node(LIST_HEAD *list_head, LIST_NODE *node);
 LIST_NODE *dequeue(LIST_HEAD *list_head);
+void enqueue(LIST_HEAD *list_head, void *elemento);
 
 #endif

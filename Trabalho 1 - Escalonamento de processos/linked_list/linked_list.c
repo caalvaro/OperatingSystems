@@ -1,6 +1,6 @@
 #include "linked_list.h"
 
-LIST_NODE* create_node(Processo* processo) {
+LIST_NODE* create_node(void* elemento) {
     LIST_NODE* node;
 
     node = (LIST_NODE*) malloc(sizeof(LIST_NODE));
@@ -9,7 +9,7 @@ LIST_NODE* create_node(Processo* processo) {
         return NULL;
     }
 
-    node->processo = processo;
+    node->elemento = elemento;
     node->previous_node = NULL;
     node->next_node = NULL;
 
@@ -73,4 +73,8 @@ LIST_NODE* dequeue(LIST_HEAD* list_head) {
     remove_node(list_head, list_head->first_node);
 
     return first_node;
+}
+
+void enqueue(LIST_HEAD* list_head, void *element) {
+    append_node(list_head, create_node((void *) element));
 }
