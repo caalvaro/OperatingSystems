@@ -26,7 +26,6 @@ struct _Processo
     int tempo_servico;
     int tempo_executado;
     int tempo_ciclo_atual;
-    int status;
     LIST_HEAD *lista_io;
 };
 
